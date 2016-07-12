@@ -52,14 +52,25 @@ public class WeixinServlet extends HttpServlet{
 			
 			String respone = null;
 			if(MessageUtil.MSGTYPE_TEXT.equals(msgType)){
-				respone = MessageUtil.initText(toUser, fromUser, MessageUtil.keyWord(content));
-			}else if(MessageUtil.MSGTYPE_EVENT.equals(msgType)){//如果是事件
+				if("1".equals(content) || "2".equals(content)){
+					respone = MessageUtil.initText(toUser, fromUser, MessageUtil.keyWord(content));
+				}else if("3".equals(content)){
+					respone = MessageUtil.initNewsMessage(toUser, fromUser);
+				}else{
+					respone = "输入的指令无效哦(′⌒`)";
+				}
+				
+			}else if(MessageUtil.MSGTYPE_NEWS.equals(msgType)){//图文消失
+				respone = MessageUtil.initNewsMessage(toUser, fromUser);
+			}
+			else if(MessageUtil.MSGTYPE_EVENT.equals(msgType)){//如果是事件
 				String event = message.get("Event");//事件类型
 				//订阅
 				if(MessageUtil.EVENT_SUBSCRIBE.equals(event)){
 					respone = MessageUtil.initText(toUser, fromUser, MessageUtil.mainMenu());
 				}
 			}
+			System.out.println(respone);
 			out.println(respone);
 		} catch (DocumentException e) {
 			// TODO Auto-generated catch block
