@@ -1,19 +1,27 @@
 package com.twx.servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.dom4j.DocumentException;
+
+import com.twx.po.TextMessage;
 import com.twx.util.CheckUtil;
+import com.twx.util.MessageUtil;
 
 public class WeixinServlet extends HttpServlet{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -26,6 +34,38 @@ public class WeixinServlet extends HttpServlet{
 		PrintWriter out = resp.getWriter();
 		if(CheckUtil.checkSignature(signature, timestamp, nonce)){
 			out.print(echostr);
+		}
+	}
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setCharacterEncoding("UTF-8");
+		resp.setCharacterEncoding("UTF-8");
+		PrintWriter out = resp.getWriter();
+		try {
+			Map<String, String> message = MessageUtil.xmlToMap(req);
+			String fromUser = message.get("FromUserName");
+			String toUser = message.get("ToUserName");
+			String content = message.get("Content");
+			String msgType = message.get("MsgType");
+			String msgId = message.get("MsgId");
+			
+			
+			String respone = null;
+			if(MessageUtil.MSGTYPE_TEXT.equals(msgType)){
+				respone = MessageUtil.initText(toUser, fromUser, MessageUtil.keyWord(content));
+			}else if(MessageUtil.MSGTYPE_EVENT.equals(msgType)){//如果是事件
+				String event = message.get("Event");//事件类型
+				//订阅
+				if(MessageUtil.EVENT_SUBSCRIBE.equals(event)){
+					respone = MessageUtil.initText(toUser, fromUser, MessageUtil.mainMenu());
+				}
+			}
+			out.println(respone);
+		} catch (DocumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			out.close();
 		}
 	}
 }

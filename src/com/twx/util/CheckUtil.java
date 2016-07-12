@@ -24,7 +24,6 @@ public class CheckUtil {
 		}
 		
 		String temp = getSha1(sb.toString());
-		System.out.println(temp);
 		
 		return temp.equals(signature);
 	}
