@@ -16,6 +16,8 @@ import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
 import com.thoughtworks.xstream.XStream;
+import com.twx.po.Image;
+import com.twx.po.ImageMessage;
 import com.twx.po.News;
 import com.twx.po.NewsMessage;
 import com.twx.po.TextMessage;
@@ -156,6 +158,27 @@ public class MessageUtil {
 		newsMessage.setArticles(newsList);
 		
 		return newsMessageToXml(newsMessage);
+	}
+	
+	public static String imageMessageToXml(ImageMessage imageMessage){
+		XStream xstream = new XStream();
+		xstream.alias("xml", imageMessage.getClass());
+		return xstream.toXML(imageMessage);
+	}
+	
+	public static String initImageMessage(String toUserName,String fromUserName){
+		String message = null;
+		Image image = new Image();
+		image.setMediaId("7G5UuwP_GnNOm-TQJYLal9SbUgeQi2tq3ngPSTT8ruoxOZMbORIx6xnGKUEG7Osa");
 		
+		ImageMessage imageMessage = new ImageMessage();
+		imageMessage.setFromUserName(toUserName);
+		imageMessage.setToUserName(fromUserName);
+		imageMessage.setMsgType(MSGTYPE_IMAGE);
+		imageMessage.setCreateTime(new Date().getTime());
+		imageMessage.setImage(image);
+		
+		message = imageMessageToXml(imageMessage);
+		return message;
 	}
 }
