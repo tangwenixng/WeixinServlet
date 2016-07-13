@@ -58,6 +58,8 @@ public class WeixinServlet extends HttpServlet{
 					respone = MessageUtil.initNewsMessage(toUser, fromUser);
 				}else if("4".equals(content)){
 					respone = MessageUtil.initImageMessage(toUser, fromUser);
+				}else if("5".equals(content)){
+					respone = MessageUtil.initMusicMessage(toUser, fromUser);
 				}else{
 					respone = "输入的指令无效哦(′⌒`)";
 				}

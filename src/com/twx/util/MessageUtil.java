@@ -18,6 +18,8 @@ import org.dom4j.io.SAXReader;
 import com.thoughtworks.xstream.XStream;
 import com.twx.po.Image;
 import com.twx.po.ImageMessage;
+import com.twx.po.Music;
+import com.twx.po.MusicMessage;
 import com.twx.po.News;
 import com.twx.po.NewsMessage;
 import com.twx.po.TextMessage;
@@ -27,6 +29,7 @@ public class MessageUtil {
 	public static final String MSGTYPE_NEWS = "news";
 	public static final String MSGTYPE_IMAGE = "image";
 	public static final String MSGTYPE_VOICE = "voice";
+	public static final String MSGTYPE_MUSIC = "music";
 	public static final String MSGTYPE_LOCATION = "location";
 	public static final String MSGTYPE_LINK = "link";
 	public static final String MSGTYPE_EVENT = "event";
@@ -179,6 +182,32 @@ public class MessageUtil {
 		imageMessage.setImage(image);
 		
 		message = imageMessageToXml(imageMessage);
+		return message;
+	}
+	
+	
+	public static String musicMessageToXml(MusicMessage musicMessage){
+		XStream xstream = new XStream();
+		xstream.alias("xml", musicMessage.getClass());
+		return xstream.toXML(musicMessage);
+	}
+	
+	public static String initMusicMessage(String toUserName,String fromUserName){
+		String message = null;
+		Music music = new Music();
+		music.setThumbMediaId("C-4vT3pbBIzqwcWuasEzUV0HUH0vNc8EN65VOAOqYY2Y9g7EbyznIZdOVPzbdxj2");
+		music.setTitle("»Œ»ª - “…–ƒ≤°");
+		music.setDescription("fddffdfffddfddf");
+		music.setMusicUrl("http://teaegg.ngrok.cc/Weixin/resource/yixin.mp3");
+		music.setHQMusicUrl("http://teaegg.ngrok.cc/Weixin/resource/yixin.mp3");
+		
+		MusicMessage musicMessage = new MusicMessage();
+		musicMessage.setFromUserName(toUserName);
+		musicMessage.setToUserName(fromUserName);
+		musicMessage.setMsgType(MSGTYPE_MUSIC);
+		musicMessage.setCreateTime(new Date().getTime());
+		musicMessage.setMusic(music);
+		message = musicMessageToXml(musicMessage);
 		return message;
 	}
 }

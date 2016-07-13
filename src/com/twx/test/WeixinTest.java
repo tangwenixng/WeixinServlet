@@ -16,7 +16,7 @@ public class WeixinTest {
 			System.out.println("expiresIn:"+token.getExpiresIn());
 			
 			String filePath = "d:/1.jpg";
-			String media_id = WeixinUtil.upload(filePath, token.getToken(), "image");
+			String media_id = WeixinUtil.upload(filePath, token.getToken(), "thumb");
 			System.out.println("media_id:"+media_id);
 		}catch (IOException e) {
 			// TODO Auto-generated catch block
