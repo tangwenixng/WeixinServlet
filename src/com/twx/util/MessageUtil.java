@@ -35,9 +35,10 @@ public class MessageUtil {
 	public static final String MSGTYPE_EVENT = "event";
 	public static final String EVENT_SUBSCRIBE = "subscribe";
 	public static final String EVENT_SCAN = "SCAN";
-	public static final String EVENT_LOCATION = "LOCATION";
+	public static final String EVENT_LOCATION = "location_select";
 	public static final String EVENT_CLICK = "CLICK";
 	public static final String EVENT_VIEW = "VIEW";
+	public static final String EVENT_SCANCODE_PUSH = "scancode_push";
 	
 	/**
 	 * xmlתmap

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<xml>
+	<ToUserName><![CDATA[toUser]]></ToUserName>
+	<FromUserName><![CDATA[fromUser]]></FromUserName>
+	<CreateTime>12345678</CreateTime>
+	<MsgType><![CDATA[text]]></MsgType>
+	<Content><![CDATA[你好]]></Content>
+</xml>

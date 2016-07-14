@@ -1,7 +1,6 @@
 package com.twx.servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Date;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -11,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.dom4j.DocumentException;
 
-import com.twx.po.TextMessage;
 import com.twx.util.CheckUtil;
 import com.twx.util.MessageUtil;
 
@@ -72,9 +70,21 @@ public class WeixinServlet extends HttpServlet{
 				//¶©ÔÄ
 				if(MessageUtil.EVENT_SUBSCRIBE.equals(event)){
 					respone = MessageUtil.initText(toUser, fromUser, MessageUtil.mainMenu());
+				}else if(MessageUtil.EVENT_CLICK.equals(event)){
+					respone = MessageUtil.initText(toUser, fromUser, MessageUtil.mainMenu());
+				}else if(MessageUtil.EVENT_VIEW.equals(event)){
+					String url = message.get("EventKey");
+					respone = MessageUtil.initText(toUser, fromUser, url);
+				}else if(MessageUtil.EVENT_SCANCODE_PUSH.equals(event)){
+					String key = message.get("EventKey");
+					respone = MessageUtil.initText(toUser, fromUser, key);
+				}else if(MessageUtil.EVENT_LOCATION.equals(event)){
+					String label = message.get("SendLocationInfo");
+					System.out.println("SendLocationInfo:"+label);
+					respone = MessageUtil.initText(toUser, fromUser, label);
 				}
 			}
-			System.out.println(respone);
+//			System.out.println(respone);
 			out.println(respone);
 		} catch (DocumentException e) {
 			// TODO Auto-generated catch block
